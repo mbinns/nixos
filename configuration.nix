@@ -105,6 +105,7 @@
             wl-clipboard
             wf-recorder
             signal-desktop
+	    moonlight-qt
 
         ];
     };
@@ -138,6 +139,7 @@
         pavucontrol
         btop
 	nfs-utils
+	unzip
     ];
     
     fonts.packages = with pkgs; [
