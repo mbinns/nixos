@@ -7,9 +7,8 @@
 {
     imports =
         [ # Include the results of the hardware scan.
-            ./hardware-configuration.nix
-	    ./configs/users/mack.nix
-	    ./configs/systems/desktop.nix
+            /etc/nixos/hardware-configuration.nix
+	    ./configs/users/common.nix
 	    ./configs/systems/common.nix
         ];
 
