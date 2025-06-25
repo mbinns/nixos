@@ -64,7 +64,7 @@
     services.printing.enable = true;
 
     # Enable sound with pipewire.
-    services.pulseaudio.enable = false;
+    hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
         enable = true;
@@ -91,11 +91,6 @@
     # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
 
-    # List packages installed in system profile. To search, run:
-    environment.systemPackages = with pkgs; [
-        dunst
-        waybar
-    ];
     
     fonts.packages = with pkgs; [
         font-awesome
