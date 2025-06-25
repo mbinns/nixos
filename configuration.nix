@@ -8,6 +8,9 @@
     imports =
         [ # Include the results of the hardware scan.
             ./hardware-configuration.nix
+	    ./configs/users/mack.nix
+	    ./configs/systems/desktop.nix
+	    ./configs/systems/common.nix
         ];
 
     # Bootloader.
@@ -15,11 +18,6 @@
     boot.loader.grub.device = "/dev/sda";
     boot.loader.grub.useOSProber = true;
 
-    networking.hostName = "nixos-desktop"; # Define your hostname.
-    networking.extraHosts =
-	''
-		192.168.1.55 truenas.wargames.binns
-	'';
     # networking.wireless.enable = true;    # Enables wireless support via wpa_supplicant.
 
     # Configure network proxy if necessary
@@ -50,12 +48,6 @@
     # Enable the X11 windowing system.
     # You can disable this if you're only using the Wayland session.
     # services.xserver.enable = true;
-    services.xserver.videoDrivers = [ "nvidia" ];
-    environment.sessionVariables.NIXOS_OZONE_WL = "1";
-    nix.settings.experimental-features = [
-        "nix-command"
-        "flakes"
-    ];
 
     # Enable the KDE Plasma Desktop Environment.
     services.displayManager.sddm.enable = true;
@@ -90,37 +82,10 @@
     # Enable touchpad support (enabled default in most desktopManager).
     # services.xserver.libinput.enable = true;
 
-    # Define a user account. Don't forget to set a password with ‘passwd’.
-    users.users.mack = {
-        isNormalUser = true;
-        description = "Mack";
-        extraGroups = [ "networkmanager" "wheel" ];
-        packages = with pkgs; [
-            kdePackages.kate
-            spotify
-            discord
-            rofi-wayland
-            grim
-            slurp
-            wl-clipboard
-            wf-recorder
-            signal-desktop
-	    moonlight-qt
-
-        ];
-    };
-
     programs = {
         # Install firefox.
         firefox.enable = true;
 
-        hyprland = {
-            enable = true;
-        };
-
-	steam = {
-	    enable=true;
-	};
     };
 
     # Allow unfree packages
@@ -128,18 +93,8 @@
 
     # List packages installed in system profile. To search, run:
     environment.systemPackages = with pkgs; [
-        vim 
         dunst
-        kitty
-        wget
-        curl
-        tmux
-        git
         waybar
-        pavucontrol
-        btop
-	nfs-utils
-	unzip
     ];
     
     fonts.packages = with pkgs; [
@@ -159,9 +114,9 @@
     # Enable the OpenSSH daemon.
     services.openssh.enable = true;
 
+
+
     # Open ports in the firewall.
-    # networking.firewall.allowedTCPPorts = [ ... ];
-    # networking.firewall.allowedUDPPorts = [ ... ];
     # Or disable the firewall altogether.
     # networking.firewall.enable = false;
 
@@ -173,12 +128,4 @@
     # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
     system.stateVersion = "24.05"; # Did you read the comment?
 
-    hardware.nvidia = {
-        modesetting.enable = true;
-        powerManagement.enable = false;
-        powerManagement.finegrained = false;
-        open = false;
-        nvidiaSettings = true;
-        package = config.boot.kernelPackages.nvidiaPackages.beta;
-    };
 }
